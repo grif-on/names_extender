@@ -51,6 +51,11 @@ if (include_extension === undefined) {
   include_extension = (include_extension.toLowerCase() === "true")
 }
 
+function extendName(name, extender_symbol, desired_length, include_extension) {
+  let additional_length = (include_extension) ? 0 : (name.length - name.lastIndexOf("."))
+  return name.padStart(desired_length + additional_length, extender_symbol)
+}
+
 let fs = require("fs");
 //note - readdir is asynchronous
 fs.readdir(directory_path, (err, files) => {
@@ -59,8 +64,7 @@ fs.readdir(directory_path, (err, files) => {
     process.exit(2)
   }
   files.forEach((file_name) => {
-    let additional_length = (include_extension) ? 0 : (file_name.length - file_name.lastIndexOf("."))
-    file_name = file_name.padStart(desired_length + additional_length, extender_symbol)
-    console.log(file_name)
+    let new_file_name = extendName(file_name, extender_symbol, desired_length, include_extension)
+    console.log(new_file_name.padEnd(desired_length + 7, " ") + "<--   " + file_name)
   })
 })
