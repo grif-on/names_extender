@@ -11,6 +11,10 @@ if (desired_length === undefined) {
   console.log("Using default desired_length length : " + desired_length)
 } else {
   desired_length = parseInt(desired_length)
+  if (isNaN(desired_length)) {
+    console.log("The desired_length value isn't a number !")
+    process.exit(3)
+  }
 }
 
 if (ignore_extension === undefined) {
