@@ -9,6 +9,8 @@ if (directory_path === undefined) {
 if (desired_length === undefined) {
   desired_length = 9
   console.log("Using default desired_length length : " + desired_length)
+} else {
+  desired_length = parseInt(desired_length)
 }
 
 if (ignore_extension === undefined) {
