@@ -5,4 +5,13 @@ if (arg.length < 1) {
   process.exit(1)
 }
 
+
+let desired_length = 9
+
+if (arg.length < 2) {
+  console.log("Using default desired_length length : " + desired_length)
+} else {
+  desired_length = arg[1]
+}
+
 console.log(arg)
