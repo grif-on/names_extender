@@ -1,20 +1,20 @@
 let defaultArguments = {
   extender_symbol: "0",
   desired_length: 9,
-  ignore_extension: true
+  include_extension: false
 }
 
 function printUsage() {
-  console.log("Usage : node names_extender.js <directory_path> [extender_symbol] [desired_length] [ignore_extension]\n")
+  console.log("Usage : node names_extender.js <directory_path> [extender_symbol] [desired_length] [include_extension]\n")
   
   console.log("@param {string} directory_path - the path to the directory in wich to extend the names of the files .")
   console.log("@param {string} extender_symbol - the symbol to extend the filenames with . The default value is \"" + defaultArguments.extender_symbol + "\" .")
   console.log("@param {number} desired_length - the length of the filenames after extending . The default value is " + defaultArguments.desired_length + " .")
-  console.log("@param {boolean} ignore_extension - desired_length should not include the extension length . The default value is " + defaultArguments.ignore_extension + " .")
+  console.log("@param {boolean} include_extension - also include the extension length (with dot) as part of desired_length . The default value is " + defaultArguments.include_extension + " .")
 }
 
 
-let [directory_path, extender_symbol, desired_length, ignore_extension] = process.argv.slice(2)
+let [directory_path, extender_symbol, desired_length, include_extension] = process.argv.slice(2)
 
 if (directory_path === undefined) {
   console.log("Can't work without directory_path argument !\n")
@@ -45,10 +45,10 @@ if (desired_length === undefined) {
   }
 }
 
-if (ignore_extension === undefined) {
-  ignore_extension = defaultArguments.ignore_extension
+if (include_extension === undefined) {
+  include_extension = defaultArguments.include_extension
 } else {
-  ignore_extension = (ignore_extension.toLowerCase() === "true")
+  include_extension = (include_extension.toLowerCase() === "true")
 }
 
 let fs = require("fs");
@@ -59,7 +59,7 @@ fs.readdir(directory_path, (err, files) => {
     process.exit(2)
   }
   files.forEach((file_name) => {
-    let additional_length = (ignore_extension) ? (file_name.length - file_name.lastIndexOf(".")) : 0
+    let additional_length = (include_extension) ? 0 : (file_name.length - file_name.lastIndexOf("."))
     file_name = file_name.padStart(desired_length + additional_length, extender_symbol)
     console.log(file_name)
   })
