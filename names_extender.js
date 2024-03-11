@@ -15,4 +15,15 @@ if (arg.length < 2) {
   desired_length = arg[1]
 }
 
-console.log(arg)
+let fs = require("fs");
+//note - readdir is asynchronous
+fs.readdir(arg[0], (err, files) => {
+  if (err) {
+    console.log(err)
+    process.exit(2)
+  }
+  files.forEach((file_name) => {
+    file_name = file_name.padStart(desired_length, "X")
+    console.log(file_name)
+  })
+})
