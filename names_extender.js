@@ -1,9 +1,18 @@
-let [directory_path, desired_length, ignore_extension] = process.argv.slice(2);
+let [directory_path, extender_symbol, desired_length, ignore_extension] = process.argv.slice(2);
 
 if (directory_path === undefined) {
   console.log("Can't work without an arguments !")
-  console.log("Usage : node names_extender.js <directory_path> [desired_length] [ignore_extension]")
+  console.log("Usage : node names_extender.js <directory_path> [extender_symbol] [desired_length] [ignore_extension]")
   process.exit(1)
+}
+
+if (extender_symbol === undefined) {
+  extender_symbol = "0"
+  console.log("Using default extender_symbol value : \"" + extender_symbol + "\"")
+} else {
+  if (extender_symbol.length > 1) {
+    console.log("Note you supplied a multiple symbols to extend filenames with : " + "\"" + extender_symbol + "\"")
+  }
 }
 
 if (desired_length === undefined) {
@@ -33,7 +42,7 @@ fs.readdir(directory_path, (err, files) => {
   }
   files.forEach((file_name) => {
     let additional_length = (ignore_extension) ? (file_name.length - file_name.lastIndexOf(".")) : 0
-    file_name = file_name.padStart(desired_length + additional_length, "X")
+    file_name = file_name.padStart(desired_length + additional_length, extender_symbol)
     console.log(file_name)
   })
 })
