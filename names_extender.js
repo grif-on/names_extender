@@ -2,6 +2,7 @@ const arg = process.argv.slice(2)
 
 if (arg.length < 1) {
   console.log("Can't work without an arguments !")
+  console.log("Usage : node names_extender.js <directory_path> [desired_length]")
   process.exit(1)
 }
 
