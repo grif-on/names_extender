@@ -13,6 +13,10 @@ function run(context) {
   assert.strictEqual("999999.png",      context.extendName("999999.png",    "X", 3, false))
   assert.strictEqual("XX1.abracadabra", context.extendName("1.abracadabra", "X", 3, false))
 
+  assert.strictEqual("====2", context.extendName("2",  "=", 5, false))
+  assert.strictEqual("===24", context.extendName("24", "=", 5, false))
+  assert.strictEqual("26",    context.extendName("26", "=", 1, false))
+
 
   assert.strictEqual("000.jpeg", context.extendName("0.jpeg",   "0", 8, true))
   assert.strictEqual("042.jpeg", context.extendName("42.jpeg",  "0", 8, true))
@@ -24,6 +28,10 @@ function run(context) {
   assert.strictEqual("1.png",         context.extendName("1.png",         "X", 3, true))
   assert.strictEqual("999999.png",    context.extendName("999999.png",    "X", 3, true))
   assert.strictEqual("1.abracadabra", context.extendName("1.abracadabra", "X", 3, true))
+
+  assert.strictEqual("====2", context.extendName("2",  "=", 5, true))
+  assert.strictEqual("===24", context.extendName("24", "=", 5, true))
+  assert.strictEqual("26",    context.extendName("26", "=", 1, true))
 
 
   //ansi codes to print green message ... at least in powershell :)

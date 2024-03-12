@@ -53,11 +53,17 @@ if (include_extension === undefined) {
 
 
 function extendName(name, extender_symbol, desired_length, include_extension) {
-  let additional_length = (include_extension) ? 0 : (name.length - name.lastIndexOf("."))
+  let additional_length = 0
+  let dot_position = name.lastIndexOf(".")
+
+  if (!(dot_position < 0 || include_extension)) {
+    additional_length = name.length - dot_position
+  }
+
   return name.padStart(desired_length + additional_length, extender_symbol)
 }
 
-let fs = require("fs");
+let fs = require("fs")
 //note - readdir is asynchronous
 fs.readdir(directory_path, (err, files) => {
   if (err) {
@@ -65,8 +71,10 @@ fs.readdir(directory_path, (err, files) => {
     process.exit(2)
   }
   files.forEach((file_name) => {
+
     let new_file_name = extendName(file_name, extender_symbol, desired_length, include_extension)
     console.log(new_file_name.padEnd(desired_length + 7, " ") + "<--   " + file_name)
+
   })
 })
 
