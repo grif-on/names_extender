@@ -6,7 +6,7 @@ let defaultArguments = {
 
 function printUsage() {
   console.log("Usage : node names_extender.js <directory_path> [extender_symbol] [desired_length] [include_extension]\n")
-  
+
   console.log("@param {string} directory_path - the path to the directory in wich to extend the names of the files .")
   console.log("@param {string} extender_symbol - the symbol to extend the filenames with . The default value is \"" + defaultArguments.extender_symbol + "\" .")
   console.log("@param {number} desired_length - the length of the filenames after extending . The default value is " + defaultArguments.desired_length + " .")
@@ -51,6 +51,7 @@ if (include_extension === undefined) {
   include_extension = (include_extension.toLowerCase() === "true")
 }
 
+
 function extendName(name, extender_symbol, desired_length, include_extension) {
   let additional_length = (include_extension) ? 0 : (name.length - name.lastIndexOf("."))
   return name.padStart(desired_length + additional_length, extender_symbol)
@@ -68,3 +69,7 @@ fs.readdir(directory_path, (err, files) => {
     console.log(new_file_name.padEnd(desired_length + 7, " ") + "<--   " + file_name)
   })
 })
+
+
+
+require("./tests.js").run({ extendName: extendName })
