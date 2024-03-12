@@ -66,6 +66,7 @@ function extendName(name, extender_symbol, desired_length, include_extension) {
 let fs = require("fs")
 //note - readdir is asynchronous
 fs.readdir(directory_path, (err, files) => {
+  console.log("Renaming :")
   if (err) {
     console.log(err)
     process.exit(2)
@@ -73,9 +74,21 @@ fs.readdir(directory_path, (err, files) => {
   files.forEach((file_name) => {
 
     let new_file_name = extendName(file_name, extender_symbol, desired_length, include_extension)
-    console.log(new_file_name.padEnd(desired_length + 7, " ") + "<--   " + file_name)
+
+    if (new_file_name === file_name) {
+      console.log(file_name.padEnd(desired_length + 7, " ") + "   skipped   (name already satisfies desired length)")
+    } else {
+      console.log(new_file_name.padEnd(desired_length + 7, " ") + "<--   " + file_name)
+      fs.renameSync(directory_path + "/" + file_name, directory_path + "/" + new_file_name, (err) => {
+        if (err) {
+          console.log(err)
+          process.exit(4)
+        }
+      })
+    }
 
   })
+  console.log("Done .")
 })
 
 
